@@ -1,20 +1,20 @@
 class Project < ActiveRecord::Base
-    
+
     #instance variable for the project model
     @title = NULL
     @description = NULL
-    
+
     @max_group_size = NULL
     @min_group_size = NULL
     @topics = NULL
     @course_work = NULL
-    
+
     @hardware = NULL
     @industry_sponsored = NULL
     @client = NULL
-    
+
     @students = NULL
-    
+
     def initialize(title, description, max_group_size, min_group_size, topics, course_work, hardware, industry_sponsored, client, students)
         #constructor
         @title = title
@@ -28,7 +28,7 @@ class Project < ActiveRecord::Base
         @client = client
         @students = NULL #Null for right now will be changed to a container later
     end
-    
+
     #getter and setter methods
     def title
         @title
