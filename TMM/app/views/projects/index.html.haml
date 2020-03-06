@@ -1,0 +1,31 @@
+%h1 Projects
+
+%table#projects.table.table-striped.col-md-15
+  %thead
+    %tr
+      %th Title
+      %th Description
+      %th Max group size
+      %th Min group size
+      %th Topics
+      %th Hardware
+      %th Industry sponsored
+      %th Client
+  %tbody
+    - @projects.each do |project|
+      %tr
+        %td= project.title
+        %td= project.description
+        %td= project.min_group_size
+        %td= project.max_group_size
+        %td= project.topics
+        %td= project.hardware
+        %td= project.industry_sponsored
+        %td= project.client
+        %td= link_to 'Show', project
+        %td= link_to 'Edit', edit_project_path(project)
+        %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'Add New Project', new_project_path

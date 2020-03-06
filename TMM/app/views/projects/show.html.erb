@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @project.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>Max group size:</strong>
+  <%= @project.max_group_size %>
+</p>
+
+<p>
+  <strong>Min group size:</strong>
+  <%= @project.min_group_size %>
+</p>
+
+<p>
+  <strong>Topics:</strong>
+  <%= @project.topics %>
+</p>
+
+<p>
+  <strong>Hardware:</strong>
+  <%= @project.hardware %>
+</p>
+
+<p>
+  <strong>Industry sponsored:</strong>
+  <%= @project.industry_sponsored %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @project.client %>
+</p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
