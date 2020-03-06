@@ -28,7 +28,10 @@ class ProjectsController < ApplicationController
   def create
     # Add selected tags to the topics variable of a project
     @selected_tags = params[:tags] if params.key?(:tags)
-    params[:project].merge!(:topics => @selected_tags.join(','))
+
+    if @selected_tags != nil
+      params[:project].merge!(:topics => @selected_tags.join(','))
+    end
 
     @project = Project.new(project_params)
 
