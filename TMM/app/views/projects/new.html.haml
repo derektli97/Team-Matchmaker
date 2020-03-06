@@ -17,10 +17,10 @@
     = number_field :project, 'max_group_size', :min => 3, :max => 9
     %br
     %br
-    = label :project, :tags, 'Tags'
+    = label :project, :topics, 'Tags'
     - @all_project_tags.each do |tag|
         = tag
-        = check_box_tag "#{tag}"
+        = check_box_tag "tags[]", "#{tag}"
         &emsp;
     %br
     %br
@@ -36,7 +36,7 @@
     = text_field :project, 'client'
     %br
     %br
-    = submit_tag 'Save Changes'
+    = submit_tag 'Create Project'
 
 %br
 %br

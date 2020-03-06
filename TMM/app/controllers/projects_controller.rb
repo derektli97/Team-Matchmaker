@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects/new
   def new
     @all_project_tags = Project.all_project_tags
+
     @project = Project.new
   end
 
@@ -25,6 +26,10 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    @selected_tags = params[:tags] if params.key?(:tags)
+
+    params[:project].merge!(:topics =>  @selected_tags.join(','))
+
     @project = Project.new(project_params)
 
     respond_to do |format|
