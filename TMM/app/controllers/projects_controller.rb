@@ -14,6 +14,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+    @all_project_tags = Project.all_project_tags
     @project = Project.new
   end
 
