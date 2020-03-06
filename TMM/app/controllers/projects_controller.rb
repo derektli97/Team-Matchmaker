@@ -26,8 +26,8 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    # Add selected tags to the topics variable of a project
     @selected_tags = params[:tags] if params.key?(:tags)
-
     params[:project].merge!(:topics =>  @selected_tags.join(','))
 
     @project = Project.new(project_params)
