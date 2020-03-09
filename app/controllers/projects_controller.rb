@@ -21,6 +21,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @all_project_tags = Project.all_project_tags
   end
 
   # POST /projects
@@ -49,6 +50,13 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    # Add selected tags to the topics variable of a project
+    @selected_tags = params[:tags] if params.key?(:tags)
+
+    if @selected_tags != nil
+      params[:project].merge!(:topics => @selected_tags.join(','))
+    end
+
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
