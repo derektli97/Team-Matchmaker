@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Course:
+  = @section.course
+%p
+  %b Section:
+  = @section.section
+
+= link_to 'Edit', edit_section_path(@section)
+\|
+= link_to 'Back', sections_path

@@ -1,0 +1,18 @@
+%h1 Sections
+
+%table
+  %thead
+    %tr
+      %th Course 
+      %th Section
+
+  %tbody
+    - @sections.each do |section|
+      %tr
+        %td= link_to section.course + " " + section.section, projects_path 
+        %td= link_to 'Edit', edit_section_path(section)
+        %td= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Section', new_section_path

@@ -2,16 +2,16 @@
 %br
 %br
 
-%strong Username
-%br
-=text_area :user, 'Username', :cols => 15, :rows => 1
-%br
-%strong Password
-%br
-=text_area :user, 'Password', :cols => 15, :rows => 1
-%br
+    %strong Username
+    %br
+    =text_area :username, 'Username', :cols => 15, :rows => 1
+    %br
+    %strong Password
+    %br
+    =text_area :password, 'Password', :cols => 15, :rows => 1
+    %br
 
-= button_tag 'Login', type: 'Login', class: 'Login_Button'
+= link_to 'LOGIN', sections_path, class: 'Login_Button'
 &nbsp
 |
 &nbsp
