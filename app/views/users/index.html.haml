@@ -1,0 +1,18 @@
+%h1 Login
+%br
+%br
+
+%strong Username
+%br
+=text_area :user, 'Username', :cols => 15, :rows => 1
+%br
+%strong Password
+%br
+=text_area :user, 'Password', :cols => 15, :rows => 1
+%br
+
+= button_tag 'Login', type: 'Login', class: 'Login_Button'
+&nbsp
+|
+&nbsp
+= link_to 'Create Account', new_user_path

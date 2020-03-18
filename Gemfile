@@ -7,6 +7,7 @@ gem 'rails', '~> 5.0.0'
 gem 'sass-rails', '~> 5.0'
 # Use Haml as the templating library
 gem 'haml'
+gem 'haml-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -33,7 +34,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
 
   # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
 
   gem 'rspec-rails'
   gem 'guard-rspec'
@@ -51,7 +52,7 @@ group :development, :test do
 end
 
 group :production do
-  gem 'pg', '~> 0.21' # for Heroku deployment
+  #gem 'pg', '~> 0.21' # for Heroku deployment
   gem 'rails_12factor'
 end
 
