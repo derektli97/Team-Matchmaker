@@ -1,6 +1,6 @@
 %h1 New Project
 
-= form_tag projects_path do
+= form_tag section_projects_path do
     = label :project, :title, 'Title'
     = text_field :project, 'title'
     %br
@@ -41,4 +41,4 @@
 %br
 %br
 
-= link_to 'Back', projects_path
+= link_to 'Back', section_projects_path(:id => 1)

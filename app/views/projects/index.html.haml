@@ -22,12 +22,12 @@
         %td= project.hardware
         %td= project.industry_sponsored
         %td= project.client
-        %td= link_to 'Show', project
-        %td= link_to 'Edit', edit_project_path(project)
-        %td= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' }
+        %td= link_to 'Show', section_project_path(:id => 1)
+        %td= link_to 'Edit', edit_section_project_path(:id => 1)
+        %td= link_to 'Destroy', section_project_path(:id => 1), method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
-= link_to 'Add New Project', new_project_path
+= link_to 'Add New Project', new_section_project_path
 
 %br
 = link_to 'Back', sections_path
