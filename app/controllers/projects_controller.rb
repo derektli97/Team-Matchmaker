@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = Project.where(section_id: params[:section_id])
   end
 
   # GET /projects/1
@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
     end
 
     @project = Project.new(project_params)
+    @project.section_id = params[:section_id]
 
     respond_to do |format|
       if @project.save

@@ -8,6 +8,7 @@ gem 'sass-rails', '~> 5.0'
 # Use Haml as the templating library
 gem 'haml'
 gem 'haml-rails'
+gem 'table_print'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views

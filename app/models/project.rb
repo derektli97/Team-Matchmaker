@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
-    belongs_to :section
+    #belongs_to :section
     @all_project_tags = ['AI', 'ML', 'Networking', 'Operating Systems', 'Cloud Computing', 'Cyber Security', 'Data Science',
                          'Web Development', 'Graphics', 'Robotics', 'Algorithm Theory']
 
