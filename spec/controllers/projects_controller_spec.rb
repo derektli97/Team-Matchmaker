@@ -30,7 +30,7 @@ RSpec.describe ProjectsController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_attributes) {
     {"title" => "test", "description" => "this is a valid test", "max_group_size" => 6,
-       "min_group_size" => 3, "topics" => "AI", "hardware" => false, "industry_sponsored" => true, "client" => "exxon"}
+       "min_group_size" => 3, "topics" => "AI", "hardware" => false, "industry_sponsored" => true, "client" => "exxon", "section_id" => 1}
     # skip("Add a hash of attributes valid for your model")
   }
 
@@ -47,7 +47,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       project = Project.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {:section_id => 1}, session: valid_session
       expect(response).to be_success
     end
   end
@@ -55,14 +55,14 @@ RSpec.describe ProjectsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       project = Project.create! valid_attributes
-      get :show, params: {id: project.to_param}, session: valid_session
+      get :show, params: {id: project.to_param, :section_id => 1}, session: valid_session
       expect(response).to be_success
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {:section_id => 1}, session: valid_session
       expect(response).to be_success
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe ProjectsController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       project = Project.create! valid_attributes
-      get :edit, params: {id: project.to_param}, session: valid_session
+      get :edit, params: {id: project.to_param, :section_id => 1}, session: valid_session
       expect(response).to be_success
     end
   end
@@ -79,13 +79,13 @@ RSpec.describe ProjectsController, type: :controller do
     context "with valid params" do
       it "creates a new Project" do
         expect {
-          post :create, params: {project: valid_attributes}, session: valid_session
+          post :create, params: {project: valid_attributes, :section_id => 1}, session: valid_session
         }.to change(Project, :count).by(1)
       end
 
       it "redirects to the created project" do
-        post :create, params: {project: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Project.last)
+        post :create, params: {project: valid_attributes, :section_id => 1}, session: valid_session
+        expect(response).to redirect_to(section_projects_url)
       end
     end
 
@@ -97,51 +97,48 @@ RSpec.describe ProjectsController, type: :controller do
     # end
   end
 
-  # REVISIT THIS ONE LATER
-  # describe "PUT #update" do
-  #   context "with valid params" do
-  #     let(:new_attributes) {
-  #       {"title" => "update test", "description" => "this is an update test", "max_group_size" => 6,
-  #         "min_group_size" => 3, "topics" => "AI", "hardware" => false, "industry_sponsored" => true, "client" => "exxon"}
-  #     }
+  describe "PUT #update" do
+    context "with valid params" do
+      let(:new_attributes) {
+        {"title" => "update test", "description" => "this is an update test", "max_group_size" => 6,
+          "min_group_size" => 3, "topics" => "AI", "hardware" => false, "industry_sponsored" => true, "client" => "exxon", "section_id" => 1}
+      }
 
-  #     it "updates the requested project" do
-  #       project = Project.create! valid_attributes
-  #       put :update, params: {id: project.to_param, project: new_attributes}, session: valid_session
-  #       project.reload
-  #       puts response.body
-  #       # skip("Add assertions for updated state")
-  #       expect(response).to be_success
-  #     end
+      it "updates the requested project" do
+        project = Project.create! valid_attributes
+        put :update, params: {id: project.to_param, project: new_attributes, :section_id => 1}, session: valid_session
+        project.reload
+        expect(project.title).to eq(new_attributes["title"])
+      end
 
-  #     it "redirects to the project" do
-  #       project = Project.create! valid_attributes
-  #       put :update, params: {id: project.to_param, project: valid_attributes}, session: valid_session
-  #       expect(response).to redirect_to(project)
-  #     end
-  #   end
+      it "redirects to the project" do
+        project = Project.create! valid_attributes
+        put :update, params: {id: project.to_param, project: valid_attributes, :section_id => 1}, session: valid_session
+        expect(response).to redirect_to(section_projects_url)
+      end
+    end
 
-  #   # context "with invalid params" do
-  #   #   it "returns a success response (i.e. to display the 'edit' template)" do
-  #   #     project = Project.create! valid_attributes
-  #   #     put :update, params: {id: project.to_param, project: invalid_attributes}, session: valid_session
-  #   #     expect(response).to be_success
-  #   #   end
-  #   # end
-  # end
+    # context "with invalid params" do
+    #   it "returns a success response (i.e. to display the 'edit' template)" do
+    #     project = Project.create! valid_attributes
+    #     put :update, params: {id: project.to_param, project: invalid_attributes}, session: valid_session
+    #     expect(response).to be_success
+    #   end
+    # end
+  end
 
   describe "DELETE #destroy" do
     it "destroys the requested project" do
       project = Project.create! valid_attributes
       expect {
-        delete :destroy, params: {id: project.to_param}, session: valid_session
+        delete :destroy, params: {id: project.to_param, :section_id => 1}, session: valid_session
       }.to change(Project, :count).by(-1)
     end
 
     it "redirects to the projects list" do
       project = Project.create! valid_attributes
-      delete :destroy, params: {id: project.to_param}, session: valid_session
-      expect(response).to redirect_to(projects_url)
+      delete :destroy, params: {id: project.to_param, :section_id => 1}, session: valid_session
+      expect(response).to redirect_to(section_projects_url(:section_id => 1))
     end
   end
 
