@@ -1,6 +1,6 @@
 %h1 Editing Project
 
-= form_tag project_path(@project), :method => :put do
+= form_tag section_project_path(@project), :method => :put do
     = label :project, :title, 'Title'
     = text_field :project, 'title'
     %br
@@ -41,4 +41,4 @@
 %br
 %br
 
-= link_to 'Back', projects_path
+= link_to 'Back', section_projects_path()
