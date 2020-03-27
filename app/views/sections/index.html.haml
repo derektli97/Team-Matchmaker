@@ -3,13 +3,12 @@
 %table
   %thead
     %tr
-      %th Course 
-      %th Section
+      %th Course - Section
 
   %tbody
     - @sections.each do |section|
       %tr
-        %td= link_to section.course + " " + section.section, section_projects_url(section.id)
+        %td= link_to section.course + " - " + section.section, section_projects_url(section.id)
         %td= link_to 'Edit', edit_section_path(section)
         %td= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' }
 
