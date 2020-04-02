@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  
+
   resources :students
   resources :users
 
   resources :sections do
     resources :projects
+    resources :students
   end
 
   root 'users#index'
