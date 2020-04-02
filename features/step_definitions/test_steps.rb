@@ -42,3 +42,10 @@ end
 Given(/I am on the sections page, and there is a section/) do
   #page.has_content?()
 end
+
+# Create_Account Test Steps
+Given(/^I am on the create account page$/) do
+  visit new_user_path
+end
+
+
