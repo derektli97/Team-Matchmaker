@@ -20,6 +20,8 @@ class StudentsController < ApplicationController
     @electives = Student.electives
     @yes_no = Student.yes_no
 
+    @projects = Project.where(section_id: params[:section_id])
+
     @student = Student.new
   end
 

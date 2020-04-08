@@ -61,6 +61,23 @@
           - count += 1
   .field
     = f.label :project, "Projects"
-    = f.text_field :project
+    - @projects.each do |project|
+      = "Title: " + project.title
+      %br
+      %br
+      Description:
+      %br
+      = project.description
+      %br
+      %br
+      Hardware Experience:
+      = project.hardware
+      %br
+      %br
+      - if project.industry_sponsored
+        Industry Sponsor:
+        = project.client
+      %br
+      %br
   .actions
     = f.submit 'Submit'
