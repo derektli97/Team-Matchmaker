@@ -14,30 +14,53 @@
     = f.text_field :last_name
   .field
     = f.label :email
-    = f.text_field :email
+    = f.text_area :email, :cols => 40, :rows => 1
   .field
     = f.label :gender
-    = f.text_field :gender
+    - @genders.each do |tag|
+      = tag
+      = radio_button_tag "tags[]", "#{tag}"
+      &emsp;
   .field
     = f.label :ethnicity
-    = f.text_field :ethnicity
+    - @ethnicities.each do |tag|
+      = radio_button_tag "tags[]", "#{tag}"
+      = tag
+      %br
   .field
     = f.label :topics
-    = f.text_field :topics
+    %table
+      %tbody
+        %tr
+        - count = 0
+        - @all_project_tags.each do |tag|
+          - if count == 3
+            - count = 0
+            %tr
+          %td= check_box_tag "tags[]", "#{tag}"
+          %td= tag
+          - count += 1
   .field
-    = f.label :hardware
-    = f.check_box :hardware
+    = f.label :hardware, "Hardware Experience"
+    - @yes_no.each do |tag|
+      = radio_button_tag "tags[]", "#{tag}"
+      = tag
+      &emsp;
   .field
     = f.label :electives
-    = f.text_field :electives
+    %table
+      %tbody
+        %tr
+        - count = 0
+        - @electives.each do |tag|
+          - if count == 3
+            - count = 0
+            %tr
+          %td= check_box_tag "tags[]", "#{tag}"
+          %td= tag
+          - count += 1
   .field
-    = f.label :preferences
-    = f.text_field :preferences
-  .field
-    = f.label :section
-    = f.text_field :section
-  .field
-    = f.label :project
+    = f.label :project, "Projects"
     = f.text_field :project
   .actions
-    = f.submit 'Save'
+    = f.submit 'Submit'

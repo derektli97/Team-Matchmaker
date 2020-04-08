@@ -14,11 +14,22 @@ class StudentsController < ApplicationController
 
   # GET /students/new
   def new
+    @all_project_tags = Student.all_project_tags
+    @genders = Student.genders
+    @ethnicities = Student.ethnicities
+    @electives = Student.electives
+    @yes_no = Student.yes_no
+
     @student = Student.new
   end
 
   # GET /students/1/edit
   def edit
+    @all_project_tags = Student.all_project_tags
+    @genders = Student.genders
+    @ethnicities = Student.ethnicities
+    @electives = Student.electives
+    @yes_no = Student.yes_no
   end
 
   # POST /students
