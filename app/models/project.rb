@@ -6,4 +6,7 @@ class Project < ApplicationRecord
     def self.all_project_tags
         return @all_project_tags
     end
+    def self.get_project_tags
+        return self.topics
+    end
 end

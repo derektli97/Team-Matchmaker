@@ -20,7 +20,10 @@
     = label :project, :topics, 'Tags'
     - @all_project_tags.each do |tag|
         = tag
-        = check_box_tag "tags[]", "#{tag}"
+        - if @topics.include? tag
+            = check_box_tag "tags[]", "#{tag}", 1
+        -else
+            = check_box_tag "tags[]", "#{tag}"
         &emsp;
     %br
     %br
@@ -33,7 +36,7 @@
     %br
     %br
     = label :project, :client, 'Client'
-    = text_field :project, 'client'
+    = text_field :project, 'client', :value => @client
     %br
     %br
     = submit_tag 'Save Project'

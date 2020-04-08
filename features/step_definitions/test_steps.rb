@@ -1,3 +1,10 @@
+#
+# Here is a cheat sheet to the commands to interact with the webpages
+# https://gist.github.com/zhengjia/428105
+#
+#
+
+
 Given(/^I am on the home page$/) do
   visit root_path
 end
