@@ -22,12 +22,23 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @all_project_tags = Project.all_project_tags
+    @topics = @project.topics
+    @client = @project.client
   end
 
   # POST /projects
   # POST /projects.json
   def create
     # Add selected tags to the topics variable of a project
+    if !params[:tags].nil?
+      session[:tags] = params[:tags]
+    end 
+    if !session[:tags].nil? && params[:tags].nil?
+      new_hash = {}
+      new_hash[:tags] = session[:tags]
+      redirect_to new_section_project(new_hash)
+    end
+    
     @selected_tags = params[:tags] if params.key?(:tags)
 
     if @selected_tags != nil
