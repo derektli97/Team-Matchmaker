@@ -2,8 +2,10 @@ class Student < ApplicationRecord
   belongs_to :section
   belongs_to :project
 
-  @all_project_tags = ['AI', 'ML', 'Networking', 'Operating Systems', 'Cloud Computing', 'Cyber Security', 'Data Science',
-                         'Web Development', 'Graphics', 'Robotics', 'Algorithm Theory']
+  @all_project_tags = ['Algorithms', 'Artificial intelligence', 'Compiler Theory', 'Computer Architecture', 'Computer Graphics',
+                        'Cryptography', 'Cybersecurity', 'Data Structures', 'Data Science', 'Database Systems',
+                        'Human Computer Interaction', 'Machine Learning', 'Natural Language Processing', 'Networking',
+                        'Operating Systems', 'Parallel Computing', 'Programming Languages', 'Robotics', 'Software Engineering']
 
   @genders = ['M', 'F']
 
