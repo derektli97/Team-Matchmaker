@@ -16,6 +16,8 @@ class Student < ApplicationRecord
                   'CSCE 443', 'CSCE 444', 'CSCE 445', 'CSCE 446', 'CSCE 447', 'CSCE 452', 'CSCE 470']
 
   @yes_no = ['Yes', 'No']
+  
+  @ratings = ['1', '2', '3', '4', '5']
 
   def self.all_project_tags
       return @all_project_tags
@@ -36,4 +38,13 @@ class Student < ApplicationRecord
   def self.yes_no
     return @yes_no
   end
+  
+  def self.ratings
+    return @ratings
+  end
+  
+  def self.get_id
+    return self.id
+  end
+  
 end

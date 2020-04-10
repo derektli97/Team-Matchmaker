@@ -79,5 +79,12 @@
         = project.client
       %br
       %br
+      Please Rate this Project on a scale of 1-5
+      %br
+      - ['1', '2', '3', '4', '5'].each do |rating|
+        = rating
+        = radio_button_tag project.read_attribute('id'), "#{rating}"
+      %br
+      %br
   .actions
     = f.submit 'Submit'

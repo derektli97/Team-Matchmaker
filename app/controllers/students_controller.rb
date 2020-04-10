@@ -19,6 +19,7 @@ class StudentsController < ApplicationController
     @ethnicities = Student.ethnicities
     @electives = Student.electives
     @yes_no = Student.yes_no
+    @ratings = Student.ratings
 
     @projects = Project.where(section_id: params[:section_id])
 
