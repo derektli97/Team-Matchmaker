@@ -37,6 +37,14 @@ class StudentsController < ApplicationController
   # POST /students
   # POST /students.json
   def create
+    @all_project_tags = Student.all_project_tags
+    @genders = Student.genders
+    @ethnicities = Student.ethnicities
+    @electives = Student.electives
+    @yes_no = Student.yes_no
+
+    @projects = Project.where(section_id: params[:section_id])
+
     @student = Student.new(student_params)
 
     respond_to do |format|
