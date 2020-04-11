@@ -1,85 +1,92 @@
-= form_for @student do |f|
-  - if @student.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
-      %ul
-        - @student.errors.full_messages.each do |message|
-          %li= message
+// = form_for @student do |f|
+//   - if @student.errors.any?
+//     #error_explanation
+//       %h2= "#{pluralize(@student.errors.count, "error")} prohibited this student from being saved:"
+//       %ul
+//         - @student.errors.full_messages.each do |message|
+//           %li= message
 
-  .field
-    = f.label :first_name
-    = f.text_field :first_name
-  .field
-    = f.label :last_name
-    = f.text_field :last_name
-  .field
-    = f.label :email
-    = f.text_area :email, :cols => 40, :rows => 1
-  .field
-    = f.label :gender
-    - @genders.each do |tag|
-      = tag
-      = radio_button_tag "tags[]", "#{tag}"
-      &emsp;
-  .field
-    = f.label :ethnicity
-    - @ethnicities.each do |tag|
-      = radio_button_tag "tags[]", "#{tag}"
-      = tag
-      %br
-  .field
-    = f.label :topics
-    %table
-      %tbody
-        %tr
-        - count = 0
-        - @all_project_tags.each do |tag|
-          - if count == 3
-            - count = 0
-            %tr
-          %td= check_box_tag "tags[]", "#{tag}"
-          %td= tag
-          - count += 1
-  .field
-    = f.label :hardware, "Hardware Experience"
-    - @yes_no.each do |tag|
-      = radio_button_tag "tags[]", "#{tag}"
-      = tag
-      &emsp;
-  .field
-    = f.label :electives
-    %table
-      %tbody
-        %tr
-        - count = 0
-        - @electives.each do |tag|
-          - if count == 3
-            - count = 0
-            %tr
-          %td= check_box_tag "tags[]", "#{tag}"
-          %td= tag
-          - count += 1
-  .field
-    = f.label :project, "Projects"
-    - @projects.each do |project|
-      = "Title: " + project.title
-      %br
-      %br
-      Description:
-      %br
-      = project.description
-      %br
-      %br
-      Hardware Experience:
-      = project.hardware
-      %br
-      %br
-      - if project.industry_sponsored
-        Industry Sponsor:
-        = project.client
-        %br
-        %br
-      %br
-      %br
-  .actions
-    = f.submit 'Submit'
+//   .field
+//     = f.label :first_name
+//     = f.text_field :first_name
+//   .field
+//     = f.label :last_name
+//     = f.text_field :last_name
+//   .field
+//     = f.label :email
+//     = f.text_area :email, :cols => 40, :rows => 1
+//   .field
+//     = f.label :gender
+//     - @genders.each do |gender|
+//       = gender
+//       = radio_button_tag "gender[]", "#{gender}"
+//       &emsp;
+//   .field
+//     = f.label :ethnicity
+//     - @ethnicities.each do |ethnicity|
+//       = radio_button_tag "ethnicity[]", "#{ethnicity}"
+//       = ethnicity
+//       %br
+//   .field
+//     = f.label :topics
+//     %table
+//       %tbody
+//         %tr
+//         - count = 0
+//         - @all_project_tags.each do |tag|
+//           - if count == 3
+//             - count = 0
+//             %tr
+//           %td= check_box_tag "tags[]", "#{tag}"
+//           %td= tag
+//           - count += 1
+//   .field
+//     = f.label :hardware, "Hardware Experience"
+//     - @yes_no.each do |h|
+//       = radio_button_tag "Hardware[]", "#{h}"
+//       = h
+//       &emsp;
+//   .field
+//     = f.label :electives
+//     %table
+//       %tbody
+//         %tr
+//         - count = 0
+//         - @electives.each do |elective|
+//           - if count == 3
+//             - count = 0
+//             %tr
+//           %td= check_box_tag "elective[]", "#{elective}"
+//           %td= tag
+//           - count += 1
+//   .field
+//     = f.label :project, "Projects"
+//     - @projects.each do |project|
+//       = "Title: " + project.title
+//       %br
+//       %br
+//       Description:
+//       %br
+//       = project.description
+//       %br
+//       %br
+//       Hardware Experience:
+//       = project.hardware
+//       %br
+//       %br
+//       - if project.industry_sponsored
+//         Industry Sponsor:
+//         = project.client
+//         %br
+//         %br
+//       %br
+//       %br
+//       Please Rate this Project on a scale of 1-5
+//       %br
+//       - ['1', '2', '3', '4', '5'].each do |rating|
+//         = rating
+//         = radio_button_tag "#{'project_' + project.read_attribute('id')}", "#{rating}"
+//       %br
+//       %br
+//   .actions
+//     = f.submit 'Submit'

@@ -19,6 +19,7 @@ class StudentsController < ApplicationController
     @ethnicities = Student.ethnicities
     @electives = Student.electives
     @yes_no = Student.yes_no
+    @ratings = Student.ratings
 
     @projects = Project.where(section_id: params[:section_id])
 
@@ -27,11 +28,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1/edit
   def edit
-    @all_project_tags = Student.all_project_tags
-    @genders = Student.genders
-    @ethnicities = Student.ethnicities
-    @electives = Student.electives
-    @yes_no = Student.yes_no
+
   end
 
   # POST /students
@@ -42,10 +39,32 @@ class StudentsController < ApplicationController
     @ethnicities = Student.ethnicities
     @electives = Student.electives
     @yes_no = Student.yes_no
-
     @projects = Project.where(section_id: params[:section_id])
 
+    student_gender = params[:gender]
+    student_hardware = params[:hardware]
+    student_ethnicity = params[:ethnicity]
+    selected_tags = params[:tags]
+    student_electives = params[:electives]
+    student_preferences = []
+
+    params[:student].merge!(:gender => student_gender, :hardware => student_hardware, :ethnicity => student_ethnicity,
+                            :topics => selected_tags.join(','), :electives => student_electives.join(','), :section_id => params[:section_id],
+                            :project_id => nil)
+
+    @projects.each do |project|
+      student_preferences.push('(' + project.id.to_s + ':' + params[project.title] + ')')
+    end
+    params[:student].merge!(:preferences => student_preferences.join(','))
+
+    puts params[:student]
+
+
+
     @student = Student.new(student_params)
+
+    @student.section_id = params[:section_id]
+    @student.project_id = nil
 
     respond_to do |format|
       if @student.save

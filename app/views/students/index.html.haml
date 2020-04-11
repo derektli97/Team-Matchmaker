@@ -30,8 +30,8 @@
         %td= student.hardware
         %td= student.electives
         %td= student.preferences
-        %td= student.section
-        %td= student.project
+        %td= student.section_id
+        %td= student.project_id
         %td= link_to 'Show', student
         %td= link_to 'Edit', edit_student_path(student)
         %td= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' }
