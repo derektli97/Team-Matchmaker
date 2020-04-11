@@ -8,6 +8,6 @@ Feature: Sections_Page
 	Scenario: Edit Section
 	    Given I am on the sections page, and there is a section
 	    When I click on Edit section
-	    And Change section number to 501
+	    And Change section number to "509"
 	    And Click Save
-	    Then The section number is changed to 501
+	    Then The section number is changed to "509"

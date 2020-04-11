@@ -1,0 +1,87 @@
+%h1 Student Preference Form
+
+= form_tag section_students_path do
+    = label :student, :first_name
+    = text_field :student, :first_name
+
+    = label :student, :last_name
+    = text_field :student, :last_name
+
+    = label :student, :email
+    = text_area :student, :email, :cols => 40, :rows => 1
+
+    = label :student, :gender
+    - @genders.each do |gender|
+        = gender
+        = radio_button_tag "gender", "#{gender}"
+        &emsp;
+
+    = label :student, :ethnicity
+    - @ethnicities.each do |ethnicity|
+        = radio_button_tag "ethnicity", "#{ethnicity}"
+        = ethnicity
+        %br
+
+    = label :student, :topics
+    %table
+        %tbody
+            %tr
+            - count = 0
+            - @all_project_tags.each do |tag|
+                - if count == 3
+                    - count = 0
+                    %tr
+                %td= check_box_tag "tags[]", "#{tag}"
+                %td= tag
+                - count += 1
+
+    = label :student, :hardware, "Hardware Experience"
+    - @yes_no.each do |h|
+        = radio_button_tag "Hardware[]", "#{h}"
+        = h
+        &emsp;
+
+    = label :student, :electives
+    %table
+        %tbody
+            %tr
+            - count = 0
+            - @electives.each do |elective|
+                - if count == 3
+                    - count = 0
+                    %tr
+                %td= check_box_tag "electives[]", "#{elective}"
+                %td= elective
+                - count += 1
+
+    = label :student, :project, "Projects"
+    - @projects.each do |project|
+        = "Title: " + project.title
+        %br
+        %br
+        Description:
+        %br
+        = project.description
+        %br
+        %br
+        Hardware Experience:
+        = project.hardware
+        %br
+        %br
+        - if project.industry_sponsored
+            Industry Sponsor:
+            = project.client
+            %br
+            %br
+        %br
+        %br
+        Please Rate this Project on a scale of 1-5
+        %br
+        - ['1', '2', '3', '4', '5'].each do |rating|
+            = rating
+            = radio_button_tag project.read_attribute('title'), "#{rating}"
+        %br
+        %br
+    = submit_tag 'Submit'
+//= render 'form'
+= link_to 'Back', section_students_path

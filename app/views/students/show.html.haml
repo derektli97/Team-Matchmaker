@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b First name:
+  = @student.first_name
+%p
+  %b Last name:
+  = @student.last_name
+%p
+  %b Email:
+  = @student.email
+%p
+  %b Gender:
+  = @student.gender
+%p
+  %b Ethnicity:
+  = @student.ethnicity
+%p
+  %b Topics:
+  = @student.topics
+%p
+  %b Hardware:
+  = @student.hardware
+%p
+  %b Electives:
+  = @student.electives
+%p
+  %b Preferences:
+  = @student.preferences
+%p
+  %b Section:
+  = @student.section_id
+%p
+  %b Project:
+  = @student.project_id
+
+= link_to 'Edit', edit_student_path(@student)
+\|
+= link_to 'Back', students_path

@@ -14,5 +14,9 @@
  *= require_self
  */
 textarea {
-    resize: none;
+  resize: none;
+}
+
+label {
+  font-size: 18px;
 }

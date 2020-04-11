@@ -18,10 +18,17 @@
     %br
     %br
     = label :project, :topics, 'Tags'
-    - @all_project_tags.each do |tag|
-        = tag
-        = check_box_tag "tags[]", "#{tag}"
-        &emsp;
+    %table
+        %tbody
+            %tr
+                - count = 0
+                - @all_project_tags.each do |tag|
+                    - if count == 3
+                        - count = 0
+                        %tr
+                    %td= check_box_tag "tags[]", "#{tag}"
+                    %td= tag
+                    - count += 1
     %br
     %br
     = label :project, :hardware, 'Hardware'
@@ -41,4 +48,4 @@
 %br
 %br
 
-= link_to 'Back', section_projects_path(:id => 1)
+= link_to 'Back', section_projects_path(:section_id)

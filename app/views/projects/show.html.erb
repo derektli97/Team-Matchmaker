@@ -39,6 +39,12 @@
   <strong>Client:</strong>
   <%= @project.client %>
 </p>
+<p>
+  <strong>Students</strong>
+  <%#= @students.each do |student| %>
+    <%#= student.read_attribute('first_name ') + student.read_attribute('last_name') %>
+  <%#end%>
+</p>
 
 <%= link_to 'Edit', edit_section_project_path(@project) %> |
 <%= link_to 'Back', section_projects_url %>
