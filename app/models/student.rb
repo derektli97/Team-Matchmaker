@@ -1,6 +1,6 @@
 class Student < ApplicationRecord
-  belongs_to :section
-  belongs_to :project
+  #belongs_to :section
+  #belongs_to :project
 
   @all_project_tags = ['Algorithms', 'Artificial intelligence', 'Compiler Theory', 'Computer Architecture', 'Computer Graphics',
                         'Cryptography', 'Cybersecurity', 'Data Structures', 'Data Science', 'Database Systems',
