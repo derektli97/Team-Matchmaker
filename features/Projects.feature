@@ -11,3 +11,14 @@ Feature: Projects_Page
 		And Fill in the project information
 		And Click Create Project
 		Then A project is created
+	Scenario: Edit A Project
+		Given I am on the projects page
+		When I click on Edit project
+		And Change the title
+		And Save the Project
+		Then The Project has been edited
+	Scenario: Destroy a Project
+		Given I am on the projects page
+		When I click on Destroy
+		And I click OK
+		Then The project is destroyed
