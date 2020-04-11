@@ -48,18 +48,17 @@ class StudentsController < ApplicationController
     student_electives = params[:electives]
     student_preferences = []
 
-    params[:student].merge!(:gender => student_gender, :hardware => student_hardware, :ethnicity => student_ethnicity,
-                            :topics => selected_tags.join(','), :electives => student_electives.join(','), :section_id => params[:section_id],
-                            :project_id => nil)
+    if student_gender != nil and student_hardware != nil and student_ethnicity != nil and selected_tags != nil and student_electives != nil
+      params[:student].merge!(:gender => student_gender, :hardware => student_hardware, :ethnicity => student_ethnicity,
+                              :topics => selected_tags.join(','), :electives => student_electives.join(','), :section_id => params[:section_id],
+                              :project_id => nil)
+    end
 
     @projects.each do |project|
       student_preferences.push('(' + project.id.to_s + ':' + params[project.title] + ')')
     end
+
     params[:student].merge!(:preferences => student_preferences.join(','))
-
-    puts params[:student]
-
-
 
     @student = Student.new(student_params)
 
@@ -68,7 +67,7 @@ class StudentsController < ApplicationController
 
     respond_to do |format|
       if @student.save
-        format.html { redirect_to @student, notice: 'Student was successfully created.' }
+        format.html { redirect_to section_students_path, notice: 'Student was successfully created.' }
         format.json { render :show, status: :created, location: @student }
       else
         format.html { render :new }
