@@ -4,21 +4,20 @@ Feature: Projects_Page
 	    Then I should see "Projects"
 	Scenario: Back Button
 		Given I am on the projects page
-		When I click on "Back", I am taken to the "sections" page
+		When I click on "Back"
+		Then I should see "Sections"
 	Scenario: Create New Project
 	    Given I am on the projects page
-		When I click on Add New Project
-		And Fill in the project information
-		And Click Create Project
-		Then A project is created
+		When I click on "Add New Project"
+		And I fill in the project information
+		And I click on the "Create Project" button
+		Then I should see "Project was successfully created."
+		
 	Scenario: Edit A Project
 		Given I am on the projects page
-		When I click on Edit project
-		And Change the title
-		And Save the Project
-		Then The Project has been edited
-	Scenario: Destroy a Project
-		Given I am on the projects page
-		When I click on Destroy
-		And I click OK
-		Then The project is destroyed
+		And A test project has been created with a title of "Capstone_project1"
+		When I click on "Edit"
+		And I fill in a new "Title" value of "CSCE_Department_Project"
+		And I click on the "Save Project" button
+		Then I should see "Project was successfully updated"
+#	Scenario: Destroy a Project
