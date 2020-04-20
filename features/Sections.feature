@@ -1,4 +1,4 @@
-Feature: Sections_Page
+Feature: Creating Sections
 	Scenario: Sections page
 		Given I am on the sections page
 		Then I should see "Sections"
@@ -32,6 +32,8 @@ Feature: Sections_Page
 		And I click on "Show"
 		Then I should see "Course: CSCE 121"
 		And I should see "Section: 500"
-#	Scenario: Destroy a section
-		
-		
+	Scenario: Destroy a section
+		Given I am on the sections page
+		And A test section has been created with the values "CSCE 121" and "500"
+		When I click on "Destroy"
+		Then I should see "Section was successfully destroyed."
