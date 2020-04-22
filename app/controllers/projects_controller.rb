@@ -93,10 +93,10 @@ class ProjectsController < ApplicationController
   end
 
   def match
-    students = Student.where(section_id: params[:section_id])
-    projects = Project.where(section_id: params[:section_id])
+    hardware_students = Student.where(section_id: params[:section_id], hardware: true)
+    hardware_projects = Project.where(section_id: params[:section_id], hardware: true)
 
-    students.each do |s|
+    hardware_students.each do |s|
       preferences = s.preferences.split(',')
       tuplePrefs = []
 
@@ -109,6 +109,42 @@ class ProjectsController < ApplicationController
         if tup[1].to_i < 3
           next
         end
+
+        hardware_projects.each do |p|
+          if p.id == tup[0].to_i
+            score = 0
+            p_topics = p.topics.split(',')
+            s_topics = s.topics.split(',')
+
+            common_topics = p_topics.intersection(s_topics)
+
+            score += common_topics.length() * 10
+
+            s_electives = s.electives.split(',')
+            electiveMap = Student.electiveMap
+
+            tags = []
+            s_electives.each do |e|
+              tags.push(electiveMap[e].split(','))
+            end
+
+            tags = tags.flatten.uniq
+
+            common_topics = p_topics.intersection(tags)
+
+            score += common_topics.length() * 5
+
+            if score > matchScore[:score]
+              matchScore[:score] = score
+              matchScore[:p_id] = p.id
+              s.project_id = matchScore[:p_id]
+            end
+          end
+        end
+
+        projects.each do |p|
+          if p.id == tup[0].to_i
+          end
       end
     end
 
