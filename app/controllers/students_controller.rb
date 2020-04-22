@@ -48,10 +48,13 @@ class StudentsController < ApplicationController
     student_electives = params[:electives]
     student_preferences = []
 
-    if student_gender != nil and student_hardware != nil and student_ethnicity != nil and selected_tags != nil and student_electives != nil
-      params[:student].merge!(:gender => student_gender, :hardware => student_hardware, :ethnicity => student_ethnicity,
-                              :topics => selected_tags.join(','), :electives => student_electives.join(','), :section_id => params[:section_id],
-                              :project_id => nil)
+    params[:student].merge!(:gender => student_gender, :ethnicity => student_ethnicity, :topics => selected_tags.join(','),
+                            :electives => student_electives.join(','), :section_id => params[:section_id], :project_id => nil)
+
+    if student_hardware == "Yes"
+      params[:student].merge!(:hardware => true)
+    elsif student_hardware == "No"
+      params[:student].merge!(:hardware => false)
     end
 
     @projects.each do |project|
