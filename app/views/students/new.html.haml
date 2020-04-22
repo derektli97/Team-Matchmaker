@@ -80,8 +80,10 @@
         - ['1', '2', '3', '4', '5'].each do |rating|
             = rating
             = radio_button_tag project.read_attribute('title'), "#{rating}"
+            &emsp;
+
         %br
         %br
     = submit_tag 'Submit'
-//= render 'form'
+
 = link_to 'Back', section_students_path

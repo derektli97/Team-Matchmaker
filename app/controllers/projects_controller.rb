@@ -92,6 +92,29 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def match
+    students = Student.where(section_id: params[:section_id])
+    projects = Project.where(section_id: params[:section_id])
+
+    students.each do |s|
+      preferences = s.preferences.split(',')
+      tuplePrefs = []
+
+      preferences.each do |p|
+        tuplePrefs.push(Tuple(p.split('.')))
+      end
+
+      matchScore = {:score => 0, :p_id => nil}
+      tuplePrefs.each do |tup|
+        if tup[1].to_i < 3
+          next
+        end
+      end
+    end
+
+    redirect_to section_projects_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

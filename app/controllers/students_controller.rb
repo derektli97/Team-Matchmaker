@@ -58,7 +58,7 @@ class StudentsController < ApplicationController
     end
 
     @projects.each do |project|
-      student_preferences.push('(' + project.id.to_s + ':' + params[project.title] + ')')
+      student_preferences.push(project.id.to_s + '.' + params[project.title])
     end
 
     params[:student].merge!(:preferences => student_preferences.join(','))
