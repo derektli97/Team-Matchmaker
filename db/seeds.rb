@@ -5,3 +5,4 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+students = [{:first_name => 'Ethan', :last_name =< 'Partin', :gender => 'M', :ethnicity => 'Hispanic or Latino', :topics => 'Algorithms,Artificial Intelligence,Compiler Theory', :hardware => false, :electives => 'CSCE 411,CSCE 470', :preferences => }]
