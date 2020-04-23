@@ -62,6 +62,6 @@ class Student < ApplicationRecord
   end
 
   def self.electiveMap
-    return @self.electiveMap
+    return @electiveMap
   end
 end
