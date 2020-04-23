@@ -2,13 +2,13 @@
 
 = form_tag section_students_path do
     = label :student, :first_name
-    = text_field :student, :first_name
+    = text_field :student, :first_name, :required => true
 
     = label :student, :last_name
-    = text_field :student, :last_name
+    = text_field :student, :last_name, :required => true
 
     = label :student, :email
-    = text_area :student, :email, :cols => 40, :rows => 1
+    = text_area :student, :email, :cols => 40, :rows => 1, :required => true
 
     = label :student, :gender
     - @genders.each do |gender|

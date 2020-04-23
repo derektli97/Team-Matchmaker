@@ -142,9 +142,10 @@ class ProjectsController < ApplicationController
           end
         end
 
-        projects.each do |p|
-          if p.id == tup[0].to_i
-          end
+        # projects.each do |p|
+        #   if p.id == tup[0].to_i
+        #   end
+        # end
       end
     end
 
