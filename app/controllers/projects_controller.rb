@@ -93,61 +93,61 @@ class ProjectsController < ApplicationController
   end
 
   def match
-    hardware_students = Student.where(section_id: params[:section_id], hardware: true)
-    hardware_projects = Project.where(section_id: params[:section_id], hardware: true)
+    # hardware_students = Student.where(section_id: params[:section_id], hardware: true)
+    # hardware_projects = Project.where(section_id: params[:section_id], hardware: true)
 
-    hardware_students.each do |s|
-      preferences = s.preferences.split(',')
-      tuplePrefs = []
+    # hardware_students.each do |s|
+    #   preferences = s.preferences.split(',')
+    #   tuplePrefs = []
 
-      preferences.each do |p|
-        tuplePrefs.push(Tuple(p.split('.')))
-      end
+    #   preferences.each do |p|
+    #     tuplePrefs.push(Tuple(p.split('.')))
+    #   end
 
-      matchScore = {:score => 0, :p_id => nil}
-      tuplePrefs.each do |tup|
-        if tup[1].to_i < 3
-          next
-        end
+    #   matchScore = {:score => 0, :p_id => nil}
+    #   tuplePrefs.each do |tup|
+    #     if tup[1].to_i < 3
+    #       next
+    #     end
 
-        hardware_projects.each do |p|
-          if p.id == tup[0].to_i
-            score = 0
-            p_topics = p.topics.split(',')
-            s_topics = s.topics.split(',')
+    #     hardware_projects.each do |p|
+    #       if p.id == tup[0].to_i
+    #         score = 0
+    #         p_topics = p.topics.split(',')
+    #         s_topics = s.topics.split(',')
 
-            common_topics = p_topics.intersection(s_topics)
+    #         common_topics = p_topics.intersection(s_topics)
 
-            score += common_topics.length() * 10
+    #         score += common_topics.length() * 10
 
-            s_electives = s.electives.split(',')
-            electiveMap = Student.electiveMap
+    #         s_electives = s.electives.split(',')
+    #         electiveMap = Student.electiveMap
 
-            tags = []
-            s_electives.each do |e|
-              tags.push(electiveMap[e].split(','))
-            end
+    #         tags = []
+    #         s_electives.each do |e|
+    #           tags.push(electiveMap[e].split(','))
+    #         end
 
-            tags = tags.flatten.uniq
+    #         tags = tags.flatten.uniq
 
-            common_topics = p_topics.intersection(tags)
+    #         common_topics = p_topics.intersection(tags)
 
-            score += common_topics.length() * 5
+    #         score += common_topics.length() * 5
 
-            if score > matchScore[:score]
-              matchScore[:score] = score
-              matchScore[:p_id] = p.id
-              s.project_id = matchScore[:p_id]
-            end
-          end
-        end
+    #         if score > matchScore[:score]
+    #           matchScore[:score] = score
+    #           matchScore[:p_id] = p.id
+    #           s.project_id = matchScore[:p_id]
+    #         end
+    #       end
+    #     end
 
-        # projects.each do |p|
-        #   if p.id == tup[0].to_i
-        #   end
-        # end
-      end
-    end
+    #     # projects.each do |p|
+    #     #   if p.id == tup[0].to_i
+    #     #   end
+    #     # end
+    #   end
+    # end
 
     redirect_to section_projects_path
   end
