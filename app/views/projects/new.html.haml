@@ -2,19 +2,19 @@
 
 = form_tag section_projects_path do
     = label :project, :title, 'Title'
-    = text_field :project, 'title'
+    = text_field :project, 'title', :required => true
     %br
     %br
     = label :project, :description, 'Description'
-    = text_area :project, 'description', :cols =>70, :rows => 10
+    = text_area :project, 'description', :cols =>70, :rows => 10, :required => true
     %br
     %br
     = label :project, :min_group_size, "Min Group Size"
-    = number_field :project, 'min_group_size', :min => 3, :max => 9
+    = number_field :project, 'min_group_size', :min => 2, :max => 6, :required => true
     %br
     %br
     = label :project, :max_group_size, "Max Group Size"
-    = number_field :project, 'max_group_size', :min => 3, :max => 9
+    = number_field :project, 'max_group_size', :min => 2, :max => 6, :required => true
     %br
     %br
     = label :project, :topics, 'Tags'
