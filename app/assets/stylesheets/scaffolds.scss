@@ -22,7 +22,7 @@ pre {
 
 a {
   color: #000;
-
+  text-size-adjust: 150%;
   &:visited {
     color: #666;
   }
@@ -35,6 +35,12 @@ a {
 
 th {
   padding-bottom: 5px;
+  font-size: 150%
+}
+
+h1 {
+  text-align: center;
+  padding-bottom: 5px
 }
 
 td {
