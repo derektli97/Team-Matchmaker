@@ -93,62 +93,88 @@ class ProjectsController < ApplicationController
   end
 
   def match
-    hardware_students = Student.where(section_id: params[:section_id], hardware: true)
-    hardware_projects = Project.where(section_id: params[:section_id], hardware: true)
-
-    hardware_students.each do |s|
-      preferences = s.preferences.split(',')
-      tuplePrefs = []
-
+    students = Student.where(section_id: params[:section_id])
+    projects = Project.where(section_id: params[:section_id])
+    
+    #puts students.length()
+    
+    student_pool = {}
+    
+    students.each do |student|
+      preferences = student.preferences.split(',')
+      #puts "|||STUDENT ID|||" + student.id.to_s
+      #puts preferences
       preferences.each do |p|
-        tuplePrefs.push(Tuple(p.split('.')))
-      end
-
-      matchScore = {:score => 0, :p_id => nil}
-      tuplePrefs.each do |tup|
-        if tup[1].to_i < 3
-          next
-        end
-
-        hardware_projects.each do |p|
-          if p.id == tup[0].to_i
-            score = 0
-            p_topics = p.topics.split(',')
-            s_topics = s.topics.split(',')
-
-            common_topics = p_topics.intersection(s_topics)
-
-            score += common_topics.length() * 10
-
-            s_electives = s.electives.split(',')
-            electiveMap = Student.electiveMap
-
-            tags = []
-            s_electives.each do |e|
-              tags.push(electiveMap[e].split(','))
-            end
-
-            tags = tags.flatten.uniq
-
-            common_topics = p_topics.intersection(tags)
-
-            score += common_topics.length() * 5
-
-            if score > matchScore[:score]
-              matchScore[:score] = score
-              matchScore[:p_id] = p.id
-              s.project_id = matchScore[:p_id]
-            end
+        pref_parse = p.split('.')
+        if(pref_parse[1].to_i >= 3)
+          temp_array = student_pool[pref_parse[0]]
+          if(temp_array == nil)
+            temp_array = [student.id]
+          else
+            temp_array << student.id
           end
+          student_pool[pref_parse[0]] = temp_array
         end
-
-        projects.each do |p|
-          if p.id == tup[0].to_i
-          end
+        
+        
+        
       end
     end
-
+    
+    max_score = 0
+    projects.each do |project|
+      max_project_score = ((project.max_group_size - project.min_group_size)/2)*20 + project.topics.split(',').length()*10
+      max_score += max_project_score
+    end
+    
+    targetScore = 0.5*max_score
+    #puts targetScore
+    totalScore = 0
+    while(totalScore <= targetScore)
+      totalScore = 0
+      availablePool = student_pool.deep_dup
+      projects.each do |project|
+        pool = student_pool[project.id.to_s]
+        score = 0
+        #random_group_size = rand(project.min_group_size..project.max_group_size)
+        max_size = 5
+        current_size = 0
+        while(current_size <= max_size)
+          r = rand(0..pool.length())
+          search_id = pool[r]
+          
+          random_student = Student.where(id: search_id)
+          random_student.each do |random|
+            preferences = random.preferences.split(',')
+            ratings = preferences.split('.')
+            if(ratings[1] == 3)
+              score += 5
+            end
+            if(ratings[1] == 4)
+              score += 10
+            end
+            if(ratings[1] == 5)
+              score += 20
+            end
+            student_topics = random.topics.split(',')
+            project_topics = project.topics.split(',')
+            intersecting_topics = project_topics & student_topics
+            score += 10 * intersecting_topics.length()
+            current_size += 1
+          end
+          
+        end
+      totalScore += score
+      puts totalScore
+      end
+      
+    end
+    
+    puts student_pool
+    puts "End of match algorithm"
+    
     redirect_to section_projects_path
+
   end
 
   private
