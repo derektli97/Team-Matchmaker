@@ -95,12 +95,12 @@ class ProjectsController < ApplicationController
   def match
     students = Student.where(section_id: params[:section_id])
     projects = Project.where(section_id: params[:section_id])
-    
+
     #puts students.length()
-    
+
     student_pool = {}
     available_students = []
-    
+
     students.each do |student|
       preferences = student.preferences.split(',')
       #puts "|||STUDENT ID|||" + student.id.to_s
@@ -117,7 +117,7 @@ class ProjectsController < ApplicationController
         student_pool[pref_parse[0]] = temp_array
       end
     end
-    
+
     student_pool.each do |key, val|
       p = Project.where(id: key)
       min_size = p[0].min_group_size
@@ -125,22 +125,22 @@ class ProjectsController < ApplicationController
         student_pool.delete(key)
       end
     end
-    
+
     puts student_pool
     #puts available_students
-    
+
     assignment_hash = {}
     target_project_scores = {}
-    
+
     student_pool.each do |project_key, pool|
       student_num = 0
       assignment_hash[project_key] = []
       p = Project.find(project_key.to_i)
-      
+
       max_score = p.min_group_size*20 + p.topics.split(',').length()*15
       target_project_scores[p.id] = 0.85*max_score
-      
-      
+
+
       while(student_num < p.min_group_size)
         r = rand(0..(pool.length()-1))
         rand_student = pool[r]
@@ -155,13 +155,13 @@ class ProjectsController < ApplicationController
           break
         end
       end
-      
+
     end
-    
+
     puts assignment_hash
-    
+
     puts target_project_scores
-    
+
     assignment_hash.each do |_project_id, _students|
       project = Project.find(_project_id.to_i)
       score  = 0
@@ -170,7 +170,7 @@ class ProjectsController < ApplicationController
         prefs = s.preferences.split(',')
         prefs.each do |pref|
           ratings = pref.split('.')
-          
+
           if(ratings[0].to_i == project.id)
             case ratings[1].to_i
             when 5
@@ -182,10 +182,10 @@ class ProjectsController < ApplicationController
             end
           end
         end
-        
+
         intersecting_topics = (s.topics.split(',')) & (project.topics.split(','))
         score += intersecting_topics.length()*10
-        
+
         electives = s.electives.split(',')
         elective_map = Student.electiveMap
         tags = []
@@ -195,14 +195,14 @@ class ProjectsController < ApplicationController
         tags = tags.flatten.uniq
         intersecting_electives = tags & project.topics.split(',')
         score += intersecting_electives.length()*5
-        
+
       end
-      
+
       puts _project_id + ": " + score.to_s
-      
+
     end
-    
-    
+
+
     # targetScore = 0.2*max_score
     # puts targetScore
     # totalScore = 0
@@ -219,7 +219,7 @@ class ProjectsController < ApplicationController
     #     while(current_size <= max_size)
     #       r = rand(0..pool.length())
     #       search_id = pool[r]
-          
+
     #       random_student = Student.where(id: search_id)
     #       random_student.each do |random|
     #         preferences = random.preferences.split(',')
@@ -239,21 +239,21 @@ class ProjectsController < ApplicationController
     #         score += 10 * intersecting_topics.length()
     #         current_size += 1
     #       end
-          
+
     #     end
     #   totalScore += score
     #   puts totalScore
     #   end
-      
+
     #   if(totalScore > targetScore)
     #     break
     #   end
-      
+
     # end
-    
+
     #puts student_pool
     puts "End of match algorithm"
-    
+
     redirect_to section_projects_path
 
   end
