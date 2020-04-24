@@ -12,7 +12,6 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @students = Student.where(project_id: params[:id])
-    puts @students.length()
   end
 
   # GET /projects/new
@@ -104,7 +103,7 @@ class ProjectsController < ApplicationController
     available_projects = []
     student_assignments = {}
     project_assignments = {}
-    max_global_score = 0
+    max_global_score = -10000
     final_assignments = {}
     bad_matches = []
     
@@ -309,8 +308,8 @@ class ProjectsController < ApplicationController
             end
           end
         end
-        if(!hardware_match)
-          total_score -= 200
+        if(hardware_match)
+          total_score += 300
         end
       end
       total_score -= available_students.length()*10
@@ -352,6 +351,7 @@ class ProjectsController < ApplicationController
     final_assignments.each do |_id,project|
       student = Student.find(_id)
       student.project_id = project
+      student.save
     end
     
     puts "-------------------------------"
