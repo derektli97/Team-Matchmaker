@@ -93,6 +93,9 @@ class ProjectsController < ApplicationController
   end
 
   def match
+    puts "-------------------------------"
+    puts "START OF MATCH ALG"
+    puts "-------------------------------"
     students = Student.where(section_id: params[:section_id])
     projects = Project.where(section_id: params[:section_id])
     
@@ -132,111 +135,134 @@ class ProjectsController < ApplicationController
 
     assignment_hash = {}
     target_project_scores = {}
-
-    student_pool.each do |project_key, pool|
-      student_num = 0
-      assignment_hash[project_key] = []
-      p = Project.find(project_key.to_i)
-      if((available_students & pool).length()  < p.min_group_size)
-        assignment_hash.delete(project_key)
-        next
-      end
-
-      max_score = p.min_group_size*20 + p.topics.split(',').length()*15
-      target_project_scores[p.id] = 0.8*max_score
-      
-      prev_r = -1
-      while(student_num < p.min_group_size)
-        r = rand(0..(pool.length()-1))
-        if(r == prev_r)
+    available_students_copy = available_students.dup
+    
+    
+    
+    
+    
+    
+    satisfied = false
+    while(!satisfied)
+      puts "Beginning Available Students: " + available_students.to_s
+      puts "Starting Assignment Hash: " + assignment_hash.to_s
+      student_pool.each do |project_key, pool|
+        student_num = 0
+        assignment_hash[project_key] = []
+        p = Project.find(project_key.to_i)
+        if((available_students & pool).length()  < p.min_group_size)
+          assignment_hash.delete(project_key)
           next
         end
-        prev_r = r
-        rand_student = pool[r]
-        #puts available_students
-        if(available_students.include?(rand_student))
-          #puts "Project ID: " + project_key.to_s + " " + rand_student.to_s
-          available_students.delete(rand_student)
-          assignment_hash[project_key].push(rand_student)
-          pool.delete(rand_student)
-          student_num += 1
-          #puts student_num
-        end
-        if(available_students.empty?)
-          break
-        end
-      end
-    end
-    
-    puts assignment_hash
-    puts available_students
-    
-    available_students.each do |student|
-      s = Student.find(student)
-      prefs = s.preferences.split(',')
-      prefs.each do |pref|
-        ratings = pref.split('.')
-        if(ratings[1].to_i == 5 && assignment_hash.include?(ratings[0]))
-          assignment_hash[ratings[0]].push(student)
-          break
+        max_score = p.min_group_size*20 + p.topics.split(',').length()*15
+        target_project_scores[p.id] = 0.1*max_score
+        prev_r = -1
+        while(student_num < p.min_group_size)
+          r = rand(0..(pool.length()-1))
+          if(r == prev_r)
+            next
+          end
+          prev_r = r
+          rand_student = pool[r]
+          #puts available_students
+          if(available_students.include?(rand_student))
+            #puts "Project ID: " + project_key.to_s + " " + rand_student.to_s
+            available_students.delete(rand_student)
+            assignment_hash[project_key].push(rand_student)
+            pool.delete(rand_student)
+            student_num += 1
+            #puts student_num
+          end
+          if(available_students.empty?)
+            break
+          end
         end
       end
-    end
-    
-    puts available_students
-    puts assignment_hash
-    puts target_project_scores
-
-    assignment_hash.each do |_project_id, _students|
-      project = Project.find(_project_id.to_i)
-      score  = 0
-      student_hardware = false
-      _students.each do |student|
+      
+      #puts assignment_hash
+      #puts available_students
+      
+      available_students.each do |student|
         s = Student.find(student)
         prefs = s.preferences.split(',')
         prefs.each do |pref|
           ratings = pref.split('.')
-
-          if(ratings[0].to_i == project.id)
-            case ratings[1].to_i
-            when 5
-              score += 20
-            when 4
-              score += 10
-            when 3
-              score += 5
-            end
+          if(ratings[1].to_i == 5 && assignment_hash.include?(ratings[0]))
+            assignment_hash[ratings[0]].push(student)
+            break
           end
         end
-
-        intersecting_topics = (s.topics.split(',')) & (project.topics.split(','))
-        score += intersecting_topics.length()*10
-        puts "Intersecting topics: " + intersecting_topics.to_s
-        electives = s.electives.split(',')
-        #puts electives
-        elective_map = Student.electiveMap
-        tags = []
-        electives.each do |e|
-          tags << elective_map[e].split(',')
-        end
-        tags = tags.flatten.uniq
-        intersecting_electives = tags & project.topics.split(',')
-        score += intersecting_electives.length()*5
-        puts "Intersecting electives" + intersecting_electives.to_s
-        
-        if(s.hardware)
-          student_hardware = true
-        end
-
       end
       
-      if(project.hardware && !student_hardware)
-        score = 0
+      current_passing_pojects = 0
+      
+      #puts available_students
+      puts assignment_hash
+      puts target_project_scores
+  
+      assignment_hash.each do |_project_id, _students|
+        project = Project.find(_project_id.to_i)
+        score  = 0
+        student_hardware = false
+        _students.each do |student|
+          s = Student.find(student)
+          prefs = s.preferences.split(',')
+          prefs.each do |pref|
+            ratings = pref.split('.')
+            if(ratings[0].to_i == project.id)
+              case ratings[1].to_i
+              when 5
+                score += 20
+              when 4
+                score += 10
+              when 3
+                score += 5
+              end
+            end
+          end
+          intersecting_topics = (s.topics.split(',')) & (project.topics.split(','))
+          score += intersecting_topics.length()*10
+          # puts "Intersecting topics: " + intersecting_topics.to_s
+          electives = s.electives.split(',')
+          #puts electives
+          elective_map = Student.electiveMap
+          tags = []
+          electives.each do |e|
+            tags << elective_map[e].split(',')
+          end
+          tags = tags.flatten.uniq
+          intersecting_electives = tags & project.topics.split(',')
+          score += intersecting_electives.length()*5
+          
+          # puts "Intersecting electives" + intersecting_electives.to_s
+          if(s.hardware)
+            student_hardware = true
+          end
+        end
+        if(project.hardware && !student_hardware)
+          score = 0
+        end
+        # puts _project_id + ": " + score.to_s
+        if(score > target_project_scores[_project_id.to_i])
+          current_passing_pojects += 1
+        end
       end
-
-      puts _project_id + ": " + score.to_s
-
-    end
+      
+      if(current_passing_pojects == assignment_hash.keys.length())
+        puts "------------------"
+        puts "PASS " + current_passing_pojects.to_s + " passing projects"
+        puts "------------------"
+        satisfied = true
+      else
+        puts "--------------------"
+        puts "FAIL: " + current_passing_pojects.to_s + " passing projects"
+        puts "--------------------"
+        assignment_hash = {}
+        available_students = available_students_copy.dup
+        current_passing_pojects = 0
+      end
+      
+    end #end while loop
 
     #puts student_pool
     puts "End of match algorithm"
