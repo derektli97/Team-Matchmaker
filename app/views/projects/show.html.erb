@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @project.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @project.description %>
+</p>
+
+<p>
+  <strong>Max group size:</strong>
+  <%= @project.max_group_size %>
+</p>
+
+<p>
+  <strong>Min group size:</strong>
+  <%= @project.min_group_size %>
+</p>
+
+<p>
+  <strong>Topics:</strong>
+  <%= @project.topics %>
+</p>
+
+<p>
+  <strong>Hardware:</strong>
+  <%= @project.hardware %>
+</p>
+
+<p>
+  <strong>Industry sponsored:</strong>
+  <%= @project.industry_sponsored %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @project.client %>
+</p>
+<p>
+  <strong>Students</strong>
+  <%#= @students.each do |student| %>
+    <%#= student.read_attribute('first_name ') + student.read_attribute('last_name') %>
+  <%#end%>
+</p>
+
+<%= link_to 'Edit', edit_section_project_path(@project) %> |
+<%= link_to 'Back', section_projects_url %>
