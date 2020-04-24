@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   resources :users
 
   resources :sections do
-    resources :projects
+    resources :projects do
+      get 'match', on: :collection
+    end
     resources :students
   end
 

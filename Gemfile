@@ -20,6 +20,7 @@ gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
 gem 'web-console', group: :development
+gem 'tuples'
 
 #fixing small security issue
 gem 'activesupport', '~> 5.2.4.2'

@@ -58,7 +58,10 @@ class StudentsController < ApplicationController
     end
 
     @projects.each do |project|
-      student_preferences.push('(' + project.id.to_s + ':' + params[project.title] + ')')
+      rating = params[project.title]
+      if (rating.to_i >= 3)
+        student_preferences.push(project.id.to_s + '.' + rating)
+      end
     end
 
     params[:student].merge!(:preferences => student_preferences.join(','))

@@ -8,9 +8,9 @@
 
   .field
     = f.label :course
-    = f.text_field :course
+    = f.text_field :course, :required => true
   .field
     = f.label :section
-    = f.text_field :section
+    = f.text_field :section, :required => true
   .actions
     = f.submit 'Save'
