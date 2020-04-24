@@ -30,6 +30,7 @@ class Student < ApplicationRecord
                   'CSCE 434' => 'Compiler Theory', 'CSCE 435' => 'Parallel Computing', 'CSCE 438' => 'Parallel Computing',
                   'CSCE 451' => 'Compiler Theory,Algorithms', 'CSCE 310' => 'Database Systems', 'CSCE 320' => 'Data Science',
                   'CSCE 420' => 'Artificial Intelligence,Machine Learning', 'CSCE 421' => 'Machine Learning,Artificial Intelligence',
+                  'CSCE 445' => '', 'CSCE 444' => '',
                   'CSCE 436' => 'Human Computer Interaction', 'CSCE 441' => 'Computer Graphics', 'CSCE 443' => 'Computer Graphics,Human Computer Interaction',
                   'CSCE 446' => 'Computer Graphics', 'CSCE 447' => 'Data Science', 'CSCE 452' => 'Robotics', 'CSCE 470' => 'Data Science,Database Systems'}
 
