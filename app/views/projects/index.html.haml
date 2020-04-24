@@ -43,8 +43,12 @@ Student Form:
 
 %br
 %br
-- @manual_assignment.each do |s|
-  = s.first_name + ' ' + s.last_name
+-if @manual_assignment.length() > 0
+  Please Manually Assign the following Students
+  %br
+  - @manual_assignment.each do |s|
+    = s.first_name + ' ' + s.last_name
+    %br
   
 %br
 %br

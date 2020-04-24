@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.where(section_id: params[:section_id])
-    @manual_assignment = []
+    @manual_assignment = Project.manual_assignment
   end
 
   # GET /projects/1
@@ -106,6 +106,7 @@ class ProjectsController < ApplicationController
     max_global_score = -10000
     final_assignments = {}
     bad_matches = []
+    Project.clear
     
     
     
@@ -227,7 +228,10 @@ class ProjectsController < ApplicationController
       puts "Available Projects: " + available_projects.to_s
       
       count = 0
-      while(!available_students.empty? && count < 10)
+      while(!available_students.empty?)
+        if(available_projects.length() == 0)
+          break
+        end
         s = available_students.sample(1)[0]
         score_set = student_scores[s]
         #puts score_set
@@ -262,6 +266,7 @@ class ProjectsController < ApplicationController
               available_projects.delete(project)
             elsif(students.length() < p.min_group_size)
               available_students = available_students.push(students)
+              available_projects.delete(project)
               project_assignments[project] = []
             elsif(students.length() < p.max_group_size && students.length() > p.min_group_size)
               puts project.to_s + " NOT FULL"
@@ -325,10 +330,6 @@ class ProjectsController < ApplicationController
       bad_matches = available_students.deep_dup
       puts "Bad matches: "
       puts bad_matches.to_s
-      @manual_assignment = []
-      bad_matches.each do |s|
-        @manual_assignment.push(Student.find(s))
-      end
       student_assignments = student_assignments_copy.deep_dup
       project_assignments = project_assignments_copy.deep_dup
       available_projects = available_projects_copy.deep_dup
@@ -347,6 +348,10 @@ class ProjectsController < ApplicationController
     puts final_assignments.sort.to_h
     puts "Bad matches: "
     puts bad_matches
+    
+    bad_matches.each do |s|
+        Project.manual_assignment.push(Student.find(s))
+    end
     
     final_assignments.each do |_id,project|
       student = Student.find(_id)
