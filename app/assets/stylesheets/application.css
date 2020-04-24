@@ -20,3 +20,18 @@ textarea {
 label {
   font-size: 18px;
 }
+
+.poop {
+    list-style-type: none;
+    margin: 0;
+    background-color: rgb(80,0,0);
+    width: 100%;
+    padding-bottom: 10px;
+    font-size: 100%;
+
+}
+
+.pad{
+  
+  padding: 10px;
+}

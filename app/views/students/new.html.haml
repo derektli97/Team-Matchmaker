@@ -3,25 +3,37 @@
 = form_tag section_students_path do
     = label :student, :first_name
     = text_field :student, :first_name, :required => true
+    
+    %br/
+    %br/
 
+    
     = label :student, :last_name
-    = text_field :student, :last_name, :required => true
 
+    = text_field :student, :last_name, :required => true
+    
+    %br/
+    %br/
+    
     = label :student, :email
     = text_area :student, :email, :cols => 40, :rows => 1, :required => true
 
+    %br/
+    %br/
+    
     = label :student, :gender
     - @genders.each do |gender|
         = gender
         = radio_button_tag "gender", "#{gender}"
         &emsp;
-
+    %br/
+    %br/
     = label :student, :ethnicity
     - @ethnicities.each do |ethnicity|
         = radio_button_tag "ethnicity", "#{ethnicity}"
         = ethnicity
         %br
-
+    %br/
     = label :student, :topics
     %table
         %tbody
@@ -34,12 +46,16 @@
                 %td= check_box_tag "tags[]", "#{tag}"
                 %td= tag
                 - count += 1
+    %br/
 
     = label :student, :hardware, "Hardware Experience"
     - @yes_no.each do |h|
         = radio_button_tag "hardware", "#{h}"
         = h
         &emsp;
+    %br/
+    %br/
+    %br/
 
     = label :student, :electives
     %table
@@ -53,6 +69,7 @@
                 %td= check_box_tag "electives[]", "#{elective}"
                 %td= elective
                 - count += 1
+    %br/
 
     = label :student, :project, "Projects"
     - @projects.each do |project|
@@ -73,8 +90,7 @@
             = project.client
             %br
             %br
-        %br
-        %br
+   
         Please Rate this Project on a scale of 1-5
         %br
         - ['1', '2', '3', '4', '5'].each do |rating|
@@ -83,5 +99,7 @@
             &emsp;
 
         %br
-        %br
+        %br   
+        %br/
+
     = submit_tag 'Submit'
