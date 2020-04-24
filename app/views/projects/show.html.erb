@@ -41,9 +41,9 @@
 </p>
 <p>
   <strong>Students</strong>
-  <%#= @students.each do |student| %>
-    <%#= student.read_attribute('first_name ') + student.read_attribute('last_name') %>
-  <%#end%>
+  <%= @students.each do |student| %>
+    <%= student.read_attribute('first_name') + student.read_attribute('last_name') %>
+  <%end%>
 </p>
 
 <%= link_to 'Edit', edit_section_project_path(@project) %> |

@@ -43,5 +43,10 @@ Student Form:
 
 %br
 %br
+- @manual_assignment.each do |s|
+  = s.first_name + ' ' + s.last_name
+  
+%br
+%br
 
 = link_to 'Back', sections_path
